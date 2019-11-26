@@ -1,6 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:todoey_stub/widgets/task_list.dart';
+import 'package:todoey_stub/model/task.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
-class AddTask extends StatelessWidget {
+class AddTask extends StatefulWidget {
+  final Function listvalue;
+   AddTask(this.listvalue);
+  @override
+  _AddTaskState createState() => _AddTaskState();
+}
+
+class _AddTaskState extends State<AddTask> {
+  TextEditingController _controller;
+  String text_value = '';
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -22,24 +35,40 @@ class AddTask extends StatelessWidget {
               Text(
                 'Add Task',
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                    color: Colors.lightBlueAccent,
-                    fontSize: 30.0),
+                style: TextStyle(color: Colors.lightBlueAccent, fontSize: 30.0),
               ),
               TextField(
+                controller: _controller,
                 autofocus: true,
+                textAlign: TextAlign.center,
                 decoration: InputDecoration(
                   enabledBorder: new UnderlineInputBorder(
                     borderSide: new BorderSide(color: Colors.lightBlueAccent),
-
                   ),
                 ),
+                onChanged: (value) {
+                  text_value = value;
+                },
               ),
               SizedBox(
                 height: 10.0,
               ),
               FlatButton(
-                onPressed: () {},
+                onPressed: () {
+                  if (text_value.length == 0) {
+                    Fluttertoast.showToast(
+                        msg: "Please Enter Value",
+                        toastLength: Toast.LENGTH_LONG,
+                        gravity: ToastGravity.CENTER,
+                        timeInSecForIos: 1
+                    );
+                  } else {
+
+                   // _controller.clear();
+                    widget.listvalue(Task(name: text_value,isCheck: true));
+                    Navigator.pop(context);
+                  }
+                },
                 color: Colors.lightBlue,
                 child: Text(
                   'Add',
