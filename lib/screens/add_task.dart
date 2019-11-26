@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:todoey_stub/widgets/task_list.dart';
 import 'package:todoey_stub/model/task.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
+import 'package:todoey_stub/provider/taskhelper.dart';
 
 class AddTask extends StatefulWidget {
-  final Function listvalue;
-   AddTask(this.listvalue);
+//  final Function listvalue;
+//   AddTask(this.listvalue);
   @override
   _AddTaskState createState() => _AddTaskState();
 }
@@ -65,7 +66,8 @@ class _AddTaskState extends State<AddTask> {
                   } else {
 
                    // _controller.clear();
-                    widget.listvalue(Task(name: text_value,isCheck: true));
+                    //widget.listvalue(Task(name: text_value,isCheck: true));
+                    Provider.of<TaskHelper>(context).addItems(Task(name: text_value,isCheck: true));
                     Navigator.pop(context);
                   }
                 },
